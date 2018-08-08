@@ -15,9 +15,9 @@ import java.sql.Statement;
 /*******************************************************************************
  * @date 2018-08-07 上午 10:59
  * @author: huangyueran
- * @Description: phoenix的SQL创建表
+ * @Description: phoenix的SQL 表操作
  ******************************************************************************/
-public class CreateAndDropTable {
+public class TableOperation {
     private final Logger log = LoggerFactory.getLogger(Conf.class);
 
     private Connection connection = null;
@@ -73,6 +73,24 @@ public class CreateAndDropTable {
             log.info("costTime:" + costTime);
         } catch (SQLException e) {
             log.error("create table error!", e);
+        }
+    }
+
+    /**
+     * 修改表
+     */
+    @Test
+    public void alertTable() {
+        try {
+            statement = connection.createStatement();
+            // String sql = "ALTER TABLE WEB_STAT ADD PR char(10) VERSIONS=1";
+            String sql = "ALTER TABLE WEB_STAT DROP COLUMN PR";
+            statement.executeUpdate(sql);
+
+            long costTime = System.currentTimeMillis() - startTime;
+            log.info("costTime:" + costTime);
+        } catch (SQLException e) {
+            log.error("alter table error!", e);
         }
     }
 
