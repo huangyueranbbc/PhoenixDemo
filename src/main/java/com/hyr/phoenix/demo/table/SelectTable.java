@@ -1,22 +1,20 @@
-package com.hyr.phoenix.demo;
+package com.hyr.phoenix.demo.table;
 
+import com.hyr.phoenix.demo.Conf;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /*******************************************************************************
  * @date 2018-08-07 上午 10:59
- * @author: <a href=mailto:huangyr@bonree.com>黄跃然</a>
- * @Description: phoenix的SQL创建表
+ * @author: huangyueran
+ * @Description:
  ******************************************************************************/
-public class CreateTable {
+public class SelectTable {
     private final Logger log = LoggerFactory.getLogger(Conf.class);
 
     private Connection connection = null;
@@ -37,26 +35,34 @@ public class CreateTable {
     }
 
     @Test
-    public void createTable() {
+    public void selectTable() {
         try {
             statement = connection.createStatement();
-            String sql = "CREATE TABLE IF NOT EXISTS WEB_STAT (\n" +
-                    "     HOST CHAR(2) NOT NULL,\n" +
-                    "     DOMAIN VARCHAR NOT NULL,\n" +
-                    "     FEATURE VARCHAR NOT NULL,\n" +
-                    "     DATE DATE NOT NULL,\n" +
-                    "     USAGE.CORE BIGINT,\n" +
-                    "     USAGE.DB BIGINT,\n" +
-                    "     STATS.ACTIVE_VISITOR INTEGER\n" +
-                    "     CONSTRAINT PK PRIMARY KEY (HOST, DOMAIN, FEATURE, DATE)\n" +
-                    ")";
-            int result = statement.executeUpdate(sql);
-            log.info("result:" + result);
+            String sql = "select *  from WEB_STAT";
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                String host = rs.getString("HOST");
+                System.out.println("host = " + host);
+                String domain = rs.getString("DOMAIN");
+                System.out.println("domain = " + domain);
+                String feature = rs.getString("FEATURE");
+                System.out.println("feature = " + feature);
+                Date date = rs.getDate("DATE");
+                System.out.println("date = " + date);
+                long core = rs.getLong("CORE");
+                System.out.println("core = " + core);
+                long db = rs.getLong("DB");
+                System.out.println("db = " + db);
+                int active_visitor = rs.getInt("ACTIVE_VISITOR");
+                System.out.println("active_visitor = " + active_visitor);
+                System.out.println("===============================");
+            }
 
             long costTime = System.currentTimeMillis() - startTime;
             log.info("costTime:" + costTime);
         } catch (SQLException e) {
-            log.error("create table error!", e);
+            log.error("select table error!", e);
         }
     }
 

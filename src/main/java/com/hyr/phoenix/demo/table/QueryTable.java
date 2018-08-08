@@ -1,5 +1,6 @@
-package com.hyr.phoenix.demo;
+package com.hyr.phoenix.demo.table;
 
+import com.hyr.phoenix.demo.Conf;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +11,7 @@ import java.sql.*;
 
 /*******************************************************************************
  * @date 2018-08-07 上午 10:59
- * @author: <a href=mailto:huangyr@bonree.com>黄跃然</a>
+ * @author: huangyueran
  * @Description: PhoenixSQL查询
  ******************************************************************************/
 public class QueryTable {
